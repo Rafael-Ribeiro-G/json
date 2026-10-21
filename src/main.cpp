@@ -59,7 +59,7 @@ void setup()
   temperatura = doc["temperatura"];
 
   //* Tratamento de vetores
-  char* hobbies[10];
+  const char* hobbies[10];
   size_t quantidade = 0;
   int tamanhoVetor = sizeof(hobbies) / sizeof(hobbies[0]);
   if(doc["hobbies"].is<JsonArray>())
