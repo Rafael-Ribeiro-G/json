@@ -59,6 +59,7 @@ void setup()
   temperatura = doc["temperatura"];
 
   //* Tratamento de vetores
+  const int tamanho = 10;
   const char* hobbies[10];
   size_t quantidade = 0;
   int tamanhoVetor = sizeof(hobbies) / sizeof(hobbies[0]);
@@ -66,7 +67,7 @@ void setup()
   {
     JsonArrayConst qntIndicesArray = doc["hobbies"].as<JsonArrayConst>();
 
-    for(JsonVariantConst v : doc["hobbies"].as<JsonArrayConst>())
+    for(JsonVariantConst v : doc["hobbies"].as<JsonArrayConst>()) //* foreach nao existe em c mas isso eh semelhante
     {
       
       if(quantidade >= tamanhoVetor) break; //* Limitando a quantidade de itens dentro de um vetor
