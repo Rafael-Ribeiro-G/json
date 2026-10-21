@@ -74,6 +74,11 @@ void setup()
     }
   }
 
+  for(int i = 0; i < 3; i++)
+  {
+    Serial.println(hobbies[i]);
+  }
+
   Serial.printf("\n%stenho %s anos, nasci em %s, sou %s e torco para o %s",
     nome.c_str(),
     idade > 0 ? String(idade).c_str() : "Nao Informado", 
