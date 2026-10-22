@@ -58,12 +58,15 @@ void setup()
   if(doc["temperatura"].is<int>()) //* a variavel so recebera um novo valor se a chave existir
   temperatura = doc["temperatura"];
 
-  //* Tratamento de vetores
+  //* =============================== TRATAMENTO DE VETORES ===============================
   const int tamanho = 10;
   const char* hobbies[10];
   size_t quantidade = 0;
+  //* sizeof retorna o tamanho do vetor em bytes, porém cada posicao pode ter mais que um byte,
+  //* por isso dividimos o tamanho total pelo tamanho de um item do vetor existente, 
+  //* como sempre existe a posicao [0], utilizamos ela como padrao
   int tamanhoVetor = sizeof(hobbies) / sizeof(hobbies[0]);
-  if(doc["hobbies"].is<JsonArray>())
+  if(doc["hobbies"].is<JsonArray>()) //* Verifica se existe
   {
     JsonArrayConst qntIndicesArray = doc["hobbies"].as<JsonArrayConst>();
 
