@@ -102,9 +102,11 @@ void setup()
   //* Verifica se existe a chave e se o tipo é adequado
   String nome = "";
 
-  //*Confere se o conetudo da chave eh um texto
+  //*Confere se o conteudo da chave eh um texto
   if(doc["nome"].is<const char*>())
   nome = "Meu nome é " + doc["nome"].as<String>() + ", ";
+  else
+  nome = "Sem nome";
   
   //* Verifica a existencia da chave, caso nao existir passasse um valor negativo definido
   //* para indicar a inexistencia, pois 0 neste caso eh um valor possivel
@@ -131,9 +133,8 @@ void setup()
   }
 
   //* =============================== TRATAMENTO DE VETORES ===============================
-  const int tamanho = 10;
   const char* hobbies[10];
-  size_t quantidade = 0;
+  size_t posicaoVetor = 0;
   //* size_t eh um tipo inteiro usado para representar tamanho e quantidades
   //* de bytes de memoria, numeros de elementos e indices de vetor, eh o tipo que
   //* a funcao sizeof() retorna. Nao tem sinal (unsigned) e a largura depende
@@ -194,10 +195,10 @@ void setup()
     for(JsonVariantConst v : doc["hobbies"].as<JsonArrayConst>()) //* Altera sobre os elementos do array
     {
       
-      if(quantidade >= tamanhoVetor) break; //* Limita a quantidade de itens dentro de um vetor
-      hobbies[quantidade++] = v | "Nao informado";
+      if(posicaoVetor >= tamanhoVetor) break; //* Limita a quantidade de itens dentro de um vetor
+      hobbies[posicaoVetor++] = v | "Nao informado";
 
-      for(size_t i = 0; i < quantidade; i++)
+      for(size_t i = 0; i < posicaoVetor; i++)
       {
         Serial.printf("Hobby %d: %S\n\r", i + 1, hobbies[i]);
       }
@@ -212,14 +213,27 @@ void setup()
                    estadoCivil ? "solteiro" : "comprometido",
                    timeFutebol.c_str());
 
+  Serial.print("\n\rMeus hobbies: ");
+
+  if(posicaoVetor == 0)
+    Serial.println("Nenhum hobbie");
+  else
+    for(size_t i = 0; i < posicaoVetor; i++)
+    {
+      Serial.print(hobbies[i]);
+      Serial.print(i < posicaoVetor ? ", " : ".");
+    }
+
+  //* CASTING ---> forca a alteracao do valor
+
   //* ALINHAMENTO
   //* JEITO 01
-  const char* rua = doc["endereco"]["rua"].as<const char*>();
+  const char* rua = doc["endereco"]["rua\n\r"].as<const char*>();
   //* o "|" (pipe) ja esta fazendo a verificacao de tipo
   float lat = doc["endereco"]["coordenadas"]["lat"] | 0.0f;
 
   //* JEITO 02
-  JsonObjectConst endereco = doc["endereco"];
+  JsonObjectConst endereco = doc["endereco"];  
   Serial.println(endereco["rua"].as<const char*>());
   Serial.println(endereco["coordenadas"]["lat"].as<float>());
 
@@ -232,4 +246,5 @@ void loop()
 {
   
 }
+
 //! Ataque DDoS ---> Ataque de sobrecarga, enviar varios pedidos por IPs diferentes
